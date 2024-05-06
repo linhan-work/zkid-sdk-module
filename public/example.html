@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React + TS</title>
+  </head>
+  <body>
+    <script src="./zkid-sdk-module.umd.js"></script>
+    <script>
+      (async () => {
+        // create did documnet
+
+        const { initCrypto, mnemonicGenerate, Keyring, keys } = zkidSdkModule;
+
+        await initCrypto();
+        const mnemonic = mnemonicGenerate(12);
+        const keyring = new Keyring();
+        const did = keys.fromMnemonic(keyring, mnemonic, "ecdsa");
+
+        // get did document with proof
+        const doc = await did.getPublish();
+        console.log(doc);
+      })();
+    </script>
+  </body>
+</html>
